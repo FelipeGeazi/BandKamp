@@ -1,0 +1,111 @@
+from rest_framework.views import APIView, Request, Response, status
+from rest_framework.generics import ListAPIView, RetrieveAPIView
+from .models import User
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from .serializers import UserSerializer
+from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics
+from .permissions import *
+
+
+
+
+class UserView(generics.ListCreateAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+
+class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    APIView
+    has_object_permission -> self.check_object_permission
+    """
+
+    authentication_classes = [JWTAuthentication]
+    # AND
+    permission_classes = [IsAuthenticated, IsAccountOwner]
+
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+    lookup_url_kwarg = "pk"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+""" class UserView(APIView):
+ 
+    def post(self, request: Request) -> Response:
+        
+        serializer = UserSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        serializer.save()
+
+        return Response(serializer.data, status.HTTP_201_CREATED)
+
+
+class UserDetailView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAccountOwner]
+
+    
+    def get(self, request: Request, pk: int) -> Response:
+  
+        user = get_object_or_404(User, pk=pk)
+
+        self.check_object_permissions(request, user)
+
+        serializer = UserSerializer(user)
+
+        return Response(serializer.data)
+
+    def patch(self, request: Request, pk: int) -> Response:
+       
+        user = get_object_or_404(User, pk=pk)
+
+        self.check_object_permissions(request, user)
+
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data)
+
+    def delete(self, request: Request, pk: int) -> Response:
+       
+        user = get_object_or_404(User, pk=pk)
+
+        self.check_object_permissions(request, user)
+
+        user.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+ """
