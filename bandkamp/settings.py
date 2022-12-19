@@ -187,3 +187,5 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': True,
     # OTHER SETTINGS
 }
+
+ALLOWED_HOSTS = ["web-production-7fde.up.railway.app", "0.0.0.0"]
