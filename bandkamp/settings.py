@@ -191,3 +191,4 @@ SPECTACULAR_SETTINGS = {
 }
 
 ALLOWED_HOSTS = ["web-production-cfd5.up.railway.app", "0.0.0.0"]
+
