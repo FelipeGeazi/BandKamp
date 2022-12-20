@@ -11,11 +11,13 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
+import dj_database_url
 import dotenv
 from pathlib import Path
 from datetime import timedelta
-import dj_database_url
 from django.core.management.utils import get_random_secret_key
+import dotenv
+
 
 
 
@@ -62,14 +64,15 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    
+    
 ]
 
 ROOT_URLCONF = "bandkamp.urls"
@@ -118,8 +121,7 @@ DATABASES = {
 DATABASE_URL = os.getenv('DATABASE_URL')
 
 if DATABASE_URL:
-    db_from_env = dj_database_url.config(
-        default=DATABASE_URL, conn_max_age=500, ssl_require=True)
+    db_from_env = dj_database_url.config(default=DATABASE_URL)
     DATABASES['default'].update(db_from_env)
     DEBUG = False
 if not DEBUG:
@@ -188,4 +190,4 @@ SPECTACULAR_SETTINGS = {
     # OTHER SETTINGS
 }
 
-ALLOWED_HOSTS = ["web-production-7fde.up.railway.app", "0.0.0.0"]
+ALLOWED_HOSTS = ["web-production-cfd5.up.railway.app", "0.0.0.0"]
